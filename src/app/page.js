@@ -2,106 +2,99 @@
 // import Image from "next/image";
 import { useEffect } from "react";
 import  { useState } from "react"
+import { CiLogin } from "react-icons/ci";
 
 
-export default function Home() {
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [Password, setPassword] = useState("");
+  const [Username, setUsername] = useState("");
+  const [isLongEnough, setIsLongEnough] = useState(false);
+  const [isLongEnoug, setIsLongEnoug] = useState(false);
+  const [hasUpperCase, setHasUpperCase] = useState(false);
+  const [hasUpperCas, setHasUpperCas] = useState(false);
+  const [hasNumber, setHasNumber] = useState(false);
+  
+  
+  const validatePassword = (pwd) => {
+    setIsLongEnough(pwd.length > 8);
+    setHasNumber(/\d/.test(pwd));
+    setHasUpperCas( /[A-Z]/.test(pwd));
+    
+  }
+
+  const validateUsername = (name) => {
+    setIsLongEnoug(name.length > 8);
+    setHasUpperCase(/[A-Z]/.test(name));
+    
+
+  }
+  const LoginPage = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("login", 'false');
+  };
+  
+  const ProfilePage = () => {
+    setIsLoggedIn(true)
+    localStorage.setItem("login", "true");
+  };
+
+
+  useEffect(() => { 
+  const data = localStorage.getItem("login");
+  if (data === 'false') {
+    setIsLoggedIn(false)
+  }
+  }, [])
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="flex justify-center text-grey-600">
+      {isLoggedIn ? (
+        <div className="">
+          <h1 className="text-3xl pt-3 pb-4 text-center text-gray-400">Login Page</h1>
+          {
+            <div className=" flex flex-col items-center">
+              <form action="" className="flex flex-col items-center">
+                <label htmlFor="" className="text-gray-800 font-bold mt-12 uppercase">Username:</label>
+                <input type="text" placeholder="Enter username" value={Username} onChange={(e) => {
+                  setUsername(e.target.value);
+                  validateUsername(e.target.value);
+                }} className="w-45 bg-gray-400 justify-center"></input>
+                <div className="mt-2 flex gap-1.5">
+                  <input type="checkbox" checked={isLongEnoug}  disabled/>
+                  <input type="checkbox" checked={hasUpperCase} disabled />
+                </div>
+                <label htmlFor="" className="text-gray-800 font-bold uppercase mt-2">Password:</label>
+                <input type="text" placeholder="Enter password" value={Password} onChange={(e) => {
+                  setPassword(e.target.value);
+                  validatePassword(e.target.value);
+                }}  className="w-45 bg-gray-400 justify-center"></input>
+                <div className="flex gap-2 px-1.5">
+                  <input type="checkbox" checked={isLongEnough} className="mt-2"/>
+                  <input type="checkbox" checked={hasNumber} className="mt-2"/>
+                  <input type="checkbox" checked={hasUpperCas} className="mt-2"/>
+                </div>
+              </form>
+              <button  className=" flex flex-row items-center justify-center gap-1 bg-blue-500 text-white font-bold py-3 px-4 rounded hover:bg-blue-700 max-w-100% text-center mt-4" onClick={LoginPage}> <CiLogin size={30} /> Submit</button>
+            </div>
+          }
+
+        </div> 
+       
+      ) : (
+          <div className=" flex flex-col  justify-center text-center">
+            <h1 className="text-3xl pt-4">Profile Page</h1>
+            <h2 className="text-2xl pt-3">Name: Kilani Olamilekan</h2>
+            <h2 className="text-2xl pt-3">Username : @Olamie03</h2>
+            <h2 className="text-2xl pt-3 pb-3">Phone Number: 090-695-829-40</h2>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 max-w-100%" onClick={ProfilePage}>LOG OUT</button>
+            {/* <input type="checkbox">Characters greater than 8</input> */}
+          </div>
+      )
+    }
     </div>
+    
+
   );
 }
+  
