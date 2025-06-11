@@ -3,9 +3,6 @@
 import { useEffect } from "react";
 import  { useState } from "react"
 import { CiLogin } from "react-icons/ci";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
 
 
 export default function App() {
@@ -85,25 +82,18 @@ export default function App() {
         </div> 
        
       ) : (
-          <div className=" flex flex-col  justify-center items-center text-center">
+          <div className=" flex flex-col  justify-center text-center">
             <h1 className="text-3xl pt-4">Profile Page</h1>
-            <img className="flex items-center object-cover justify-center object-center rounded-full h-60 w-60 mt-2" src='./profile.webp' alt="Profile image" />
+            <img className="object-cover object-center rounded-full h-72 w-60" src='/public/profImage.webp' alt="Profile image" />
             <h2 className="text-2xl pt-3">Name: Kilani Olamilekan</h2>
             <h2 className="text-2xl pt-3">Username : @Olamie03</h2>
-            <h3 className="text-2xl pt-3">Web Developer</h3>
+            <p className="text-3xl pt-3">Web Developer</p>
             <h2 className="text-2xl pt-3 pb-3">Phone Number: 090-695-829-40</h2>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 max-w-70%" onClick={ProfilePage}>LOG OUT</button>
-            <div className="flex flex-row w-3xl justify-center text-center gap-20 mt-3">
-              <button className="justify-center object-center rounded-full  w-12 h-13 bg-amber-500" > <FaFacebook size={50} /> </button>
-              <button className="justify-center object-center rounded-full  w-12 h-13 bg-amber-500" ><FaInstagram size={50} /></button>
-              <button className="justify-center object-center rounded-full  w-12 h-13 bg-amber-500" ><FaTiktok size={50} /></button>
-            </div>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 max-w-100%" onClick={ProfilePage}>LOG OUT</button>
           </div>
       )
     }
     </div>
-    
-
   );
 }
   
